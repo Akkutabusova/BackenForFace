@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, QR,Door
+from .models import User, QR,Door,UserIndoors
 '''
 class articleSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=100)
@@ -20,25 +20,27 @@ class articleSerializer(serializers.Serializer):
         return instance
 '''
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model=User
         #fields=['id','title','author','email']
         fields='__all__'
+
+class UserIndoorsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=UserIndoors
+        fields='__all__'
+
+
 
 class QRSerializer(serializers.ModelSerializer):
     class Meta:
         model=QR
-        #fields=['id','title','author','email']
         fields='__all__'
+
 
 class DoorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Door
-        #fields=['id','title','author','email']
         fields='__all__'
-
-class InsideSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=User
-        fields=['id','name','surname']
-        #fields='__all__'
