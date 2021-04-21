@@ -3,8 +3,8 @@ from django.shortcuts import render
 
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
-from .models import User,QR,Door,UserIndoors
-from .serializers import UserSerializer,QRSerializer,DoorSerializer,UserIndoorsSerializer
+from .models import User,QR,Door,Inside, Manager
+from .serializers import UserSerializer,QRSerializer,DoorSerializer,InsideSerializer, ManagerSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -69,6 +69,27 @@ class UserDetails(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 #------------------
 
+class ManagerAPIView(APIView):
+    def get(self,request):
+        users = Manager.objects.all()
+        serializer = ManagerSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def post(self,request):
+        serializer = ManagerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,  {'message': 'Bad request'}, status=status.HTTP_400_BAD_REQUEST)
+
+class ManagerAPIGetView(APIView):
+    def get(self,request):
+        users = Manager.objects.all()
+        serializer = ManagerSerializer(users, many=True)
+        return Response(serializer.data)
+#--------------------------------
+
+
 class QRAPIGetView(APIView):
     def get(self,request):
         qrs = QR.objects.all()
@@ -91,12 +112,12 @@ class QRAPIView(APIView):
 #----------------------
 class UserIndoorAPIView(APIView):
     def get(self,request):
-        users = UserIndoors.objects.all()
-        serializer = UserIndoorsSerializer(users, many=True)
+        users = Inside.objects.all()
+        serializer = InsideSerializer(users, many=True)
         return Response(serializer.data)
 
     def post(self,request):
-        serializer = UserIndoorsSerializer(data=request.data)
+        serializer = InsideSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -105,19 +126,19 @@ class UserIndoorAPIView(APIView):
 class UserIndoorDetails(APIView):
     def get_object(self,id):
         try:
-            return UserIndoors.objects.get(id=id)
+            return Inside.objects.get(id=id)
 
-        except UserIndoors.DoesNotExist:
+        except Inside.DoesNotExist:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
     def get(self,request,id):
         user=self.get_object(id)
-        serializer = UserIndoorsSerializer(user)
+        serializer = InsideSerializer(user)
         return Response(serializer.data)
 
     def put(self,request,id):
         user = self.get_object(id)
-        serializer = UserIndoorsSerializer(user, data=request.data)
+        serializer = InsideSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

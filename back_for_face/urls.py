@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import UserViewSet,UserAPIView,\
     UserDetails,QRAPIView,QRDetails,DoorDetails,DoorAPIView ,UserAPIGetView,\
-QRAPIGetView,UserIndoorAPIView,UserIndoorDetails
+QRAPIGetView,UserIndoorAPIView,UserIndoorDetails,ManagerAPIView
 from rest_framework.routers import DefaultRouter
 
 
@@ -15,6 +15,7 @@ urlpatterns = [
     path('registration/',UserAPIView.as_view()),#classbased apiview
     path('auth/',QRAPIView.as_view()),
     path('door/',DoorAPIView.as_view()),
+    path('manager/',ManagerAPIView.as_view()),
     path('inside/',UserIndoorAPIView.as_view()),
     #path('detail/<int:pk>/', article_detail),
     path('update/user/<int:id>/',UserDetails.as_view()),

@@ -15,7 +15,19 @@ class User(models.Model):
     phone = models.CharField(max_length=200,null=True)
     images=models.ImageField(blank=False,null=True)
     date_created=models.DateTimeField(auto_now_add=True,null=True)
-    status=models.CharField(max_length=200,null=True, choices=STATUS)
+    status=models.CharField(max_length=200,null=True, choices=STATUS,default=STATUS[1][1])
+
+    #images=files[]
+
+    def __str__(self):
+        return  self.surname+" "+self.name
+
+class Manager(models.Model):
+
+    name=models.CharField(max_length=200,null=True)
+    surname=models.CharField(max_length=200,null=True)
+    phone = models.CharField(max_length=200,null=True)
+    date_created=models.DateTimeField(auto_now_add=True,null=True)
 
     #images=files[]
 
@@ -37,7 +49,7 @@ class QR(models.Model):
     def __str__(self):
         return  self.qr_string
 
-class UserIndoors(models.Model):
+class Inside(models.Model):
     user_id=models.IntegerField(null=True)
     entry_time=models.DateTimeField(auto_now_add=True,null=True)
 
@@ -45,3 +57,4 @@ class UserIndoors(models.Model):
 
     def __str__(self):
         return  self.surname+" "+self.name
+
