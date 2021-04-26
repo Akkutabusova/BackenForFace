@@ -47,7 +47,7 @@ class UserAPIView(APIView):
                 serializer_hashpassword = UserSerializer(user_hashpassword, data={"password":hash})
                 if serializer_hashpassword.is_valid():
                     serializer_hashpassword.save()
-                    пшеreturn Response(serializer_hashpassword.data, status=status.HTTP_201_CREATED)
+                    return Response(serializer_hashpassword.data, status=status.HTTP_201_CREATED)
                     #return Response("User created successfully", status=status.HTTP_201_CREATED)
             else:
                 return Response("Wrong phone format", status=status.HTTP_400_BAD_REQUEST)
