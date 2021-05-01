@@ -20,7 +20,7 @@ class articleSerializer(serializers.Serializer):
         return instance
 '''
 class UserSerializer(serializers.ModelSerializer):
-
+    user = serializers.StringRelatedField(read_only=True)
     class Meta:
         model=User
         #fields=['id','title','author','email']
@@ -51,3 +51,4 @@ class DoorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Door
         fields='__all__'
+

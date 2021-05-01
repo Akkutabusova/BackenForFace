@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import UserViewSet,UserAPIView,\
     UserDetails,QRAPIView,QRDetails,DoorDetails,DoorAPIView ,UserAPIGetView,\
-QRAPIGetView,InsideAPIView,InsideDetails,ManagerAPIView
+QRAPIGetView,InsideAPIView,InsideDetails,ManagerAPIView,CustomJustAPIView,UserProfileListCreateView,userProfileDetailView
 from rest_framework.routers import DefaultRouter
 
 
@@ -22,9 +22,15 @@ urlpatterns = [
     path('update/inside/<int:id>/',InsideDetails.as_view()),
     path('user/', UserAPIGetView.as_view()),
     path('qr/', QRAPIGetView.as_view()),
-    path('update/auth/<int:id>/',QRDetails.as_view()),
+    path('update/send_qr/<int:id>/',QRDetails.as_view()),
     path('door/<int:id>/',DoorDetails.as_view()),
+    path('auth/',CustomJustAPIView.as_view()),
+    #path('auth/',CustomAuthToken.as_view()),
     #path('generic/article/<int:id>',GenericAPIView.as_view()),
+#gets all user profiles and create a new profile
+    path("all-profiles",UserProfileListCreateView.as_view(),name="all-profiles"),
+   # retrieves profile details of the currently logged in user
+    path("profile/<int:pk>",userProfileDetailView.as_view(),name="profile"),
 
 ]
 

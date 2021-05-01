@@ -25,7 +25,7 @@ SECRET_KEY = '2b*x6+n*z1x4#glq&h9dvf-c2pd(#zjf4@ewnht&qn!-^6_xwo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -40,8 +40,16 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'back_for_face',
-]
 
+    'djoser',
+    # JWT authentication backend library
+    'rest_framework_simplejwt',
+]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -124,3 +132,5 @@ STATIC_URL = '/static/'
 
 MEDIA_URL='/media/'
 MEDIA_ROOT='media'
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '172.20.22.243']
